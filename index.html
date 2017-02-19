@@ -1,0 +1,170 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Simple report creator</title>
+    <meta name="description" content="Test">
+    <meta name="author" content="Mesaj">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css" rel="stylesheet" integrity="sha384-Xqcy5ttufkC3rBa8EdiAyA1VgOGrmel2Y+wxm4K3kI3fcjTWlDWrlnxyD6hOi3PF" crossorigin="anonymous">
+    <script src="js/to-markdown.js"></script>
+</head>
+
+<body>
+    <div id="forms">
+
+        <div id="steps">
+            <div class="container-fluid">
+                <div class="col-sm-6">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="language">Language:</label>
+                            <div class="input-group" id="language">
+
+                                <input type="radio" id="en" value="EN" v-model="language">
+                                <label for="en">EN</label>
+                                <input type="radio" id="pl" value="PL" v-model="language">
+                                <label for="pl">PL</label>
+                            </div>
+                            <label for="category">Category:</label>
+                            <select v-model="category" id="category" class="form-control">
+                                <option>[Quest]</option>
+                                <option>[Item]</option>
+                                <option>[NPC]</option>
+                                <option>[NPC][Drop]</option>
+                                <option>[Class][Hunter]</option>
+                                <option>[Class][Mage]</option>
+                                <option>[Class][Shaman]</option>
+                                <option>[Class][Paladin]</option>
+                                <option>[Class][Priest]</option>
+                                <option>[Class][Druid]</option>
+                                <option>[Class][Rogue]</option>
+                                <option>[Class][Death Knight]</option>
+                                <option>[Class][Warlock]</option>
+                                <option>[Class][Warrior]</option>
+                                <option>[Profession]</option>
+                                <option>[Core]</option>
+                                <option>[Exploit]</option>
+                                <option>[Web]</option>
+                            </select>
+                            <br>
+                            <label>Title:</label>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" v-model="title" id="title" placeholder="What are you reporting?">
+                                <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" v-on:click="listIssues">Find</button>
+                        </span>
+                            </div>
+
+                            <label for="description">Description</label>
+                            <textarea class="form-control" v-model="description" id="description" placeholder="Describe the problem"></textarea>
+
+                            <br>
+                            <label>Steps to reproduce:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="newStepText" placeholder="What happened, step by step">
+                                <span class="input-group-btn">
+                        <button type="button" class="btn btn-success" v-on:click="add">Add</button>
+                        </span>
+                            </div>
+
+
+                            <label for="expected">Expected result:</label>
+                            <textarea class="form-control" v-model="expected" id=="expected" placeholder="What should happen instead"></textarea>
+
+                            <label for="revision">Revision:</label>
+                            <input type="text" class="form-control" v-model="revision" id=="revision" placeholder="Type '.s in' in game chat to see">
+
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <label>Preview:</label>
+                    <h2>[{{language}}]{{category}} {{title}}</h2>
+                    <hr>
+                    <div id="template">
+                        <p><b>Description:</b></p>
+                        <p>{{ description }}</p>
+                        <br>
+                        <p><b>Steps to reproduce:</b></p>
+                        <p>
+                            <ol>
+                                <li is="step-item" v-for="(step, index) in steps" v-bind:title="step" v-on:remove="steps.splice(index, 1)"></li>
+                            </ol>
+                        </p>
+                        <br>
+                        <p><b>Expected result:</b></p>
+                        <p>{{ expected }}</p>
+                        <br>
+                        <p><b>Revision:</b> {{ revision }}</p>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+
+                <br>
+            </div>
+            <div class="container-fluid">
+                <div class="col-sm-6">
+                    <p>
+                        <h5>Similar issues (shown after clicking 'Find'):</h5>
+                        <ul id="example-1">
+                            <li v-for="item in issueList">
+                                <a v-bind:href="item.link">{{item.number}} {{item.issueTitle}}</a>
+                            </li>
+                        </ul>
+                    </p>
+                    <p>How to use:
+                        <ul>
+                            <li>
+                                <strong>Read </strong><a target="_blank" href="https://github.com/Atlantiss/BugTracker#how-to-use" class="label label-danger">Bug Tracker Rules</a></li>
+
+                            <li>Basically, keep up with the template, add links to
+                                <a target="_blank" href="https://wowhead.com" class="label label-primary">Wowhead</a> or
+                                <a target="_blank" href="https://cata.openwow.com" class="label label-primary">OpenWoW</a>
+                                <br> for example:
+                                <a target="_blank" href="http://www.wowhead.com/item=23555/dirge" class="label label-info">Dirge</a>, the ItemID is 23555, you can see it in the address bar.
+                            </li>
+                        </ul>
+                        <ol>
+                            <li>Fill all fields above</li>
+                            <li>Click "Find" button to see if similar issue already exists, check if it's about the same problem or if there's any solution posted in the comments.</li>
+                            <li>Get the server revision from game by typing '.s in' in chat</li>
+                            <li>Look at the preview and check if your information is correct</li>
+                            <li>Click 'Update Markdown Preview' button to generate text formatted for Bug Tracker</li>
+                            <li>Copy the generated text from white background and replace text it in the big field at <a target="_blank" href="https://github.com/Atlantiss/BugTracker/issues/new" class="label label-success">New Issue</a> page</li>
+                            <li>Copy the Title from Preview(at the top right) to Title in the bugtracker page</li>
+                            <li>Done! You can submit the issue.</li>
+                        </ol>
+
+                        <!--TODO:
+                <ul><li><a href="https://github.com/login/oauth/authorize?client_id=d8340fcdbaeb32c4c5e2">GH</a> login</li>
+                            <li>Submit issue via API with logged user details</li>
+                            <li>Cosmetics</li>
+                            <li>Categories</li>
+                        </ul> -->
+                    </p>
+
+                </div>
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-success" v-on:click="markdown">Update Markdown Preview</button>
+                    <div class="panel panel-success" id="markdown">
+                        <div class="panel-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vue.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
