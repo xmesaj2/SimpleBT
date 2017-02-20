@@ -65,13 +65,13 @@
                             <label for="description">Description</label>
                             <textarea class="form-control" v-model="description" id="description" placeholder="Describe the problem"></textarea>
                             
-                            <label for="current">Current result:</label>
+                            <label for="current">Current behavior:</label>
                             <textarea class="form-control" v-model="current" id="current" placeholder="What happens"></textarea>
                             
                             <label for="expected">Expected behaviour:</label>
                             <textarea class="form-control" v-model="expected" id="expected" placeholder="What should happen instead"></textarea>
                             
-                            <label>Steps to reproduce:</label>
+                            <label>Steps to reproduce the problem:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" v-model="newStepText" placeholder="What happened, step by step">
                                 <span class="input-group-btn">
@@ -99,7 +99,7 @@
                         <p><b>Expected behavior:</b></p>
                         <p>{{ expected }}</p>
                         <br>
-                        <p><b>Steps to reproduce:</b></p>
+                        <p><b>Steps to reproduce the problem:</b></p>
                         <p>
                             <ol>
                                 <li is="step-item" v-for="(step, index) in steps" v-bind:title="step" v-on:remove="steps.splice(index, 1)"></li>
