@@ -64,8 +64,13 @@
 
                             <label for="description">Description</label>
                             <textarea class="form-control" v-model="description" id="description" placeholder="Describe the problem"></textarea>
-
-                            <br>
+                            
+                            <label for="current">Current result:</label>
+                            <textarea class="form-control" v-model="current" id="current" placeholder="What happens"></textarea>
+                            
+                            <label for="expected">Expected behaviour:</label>
+                            <textarea class="form-control" v-model="expected" id="expected" placeholder="What should happen instead"></textarea>
+                            
                             <label>Steps to reproduce:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" v-model="newStepText" placeholder="What happened, step by step">
@@ -74,12 +79,8 @@
                         </span>
                             </div>
 
-
-                            <label for="expected">Expected result:</label>
-                            <textarea class="form-control" v-model="expected" id=="expected" placeholder="What should happen instead"></textarea>
-
                             <label for="revision">Revision:</label>
-                            <input type="text" class="form-control" v-model="revision" id=="revision" placeholder="Type '.s in' in game chat to see">
+                            <input type="text" class="form-control" v-model="revision" id="revision" placeholder="Type '.s in' in game chat to see">
 
                         </div>
                     </form>
@@ -92,15 +93,18 @@
                         <p><b>Description:</b></p>
                         <p>{{ description }}</p>
                         <br>
+                        <p><b>Current behavior:</b></p>
+                        <p>{{ current }}</p>
+                        <br>
+                        <p><b>Expected behavior:</b></p>
+                        <p>{{ expected }}</p>
+                        <br>
                         <p><b>Steps to reproduce:</b></p>
                         <p>
                             <ol>
                                 <li is="step-item" v-for="(step, index) in steps" v-bind:title="step" v-on:remove="steps.splice(index, 1)"></li>
                             </ol>
                         </p>
-                        <br>
-                        <p><b>Expected result:</b></p>
-                        <p>{{ expected }}</p>
                         <br>
                         <p><b>Revision:</b> {{ revision }}</p>
                     </div>
