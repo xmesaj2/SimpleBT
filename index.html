@@ -119,7 +119,7 @@
                         <h5>Similar issues (shown after clicking 'Find'):</h5>
                         <ul id="example-1">
                             <li v-for="item in issueList">
-                                <a v-bind:href="item.link">{{item.number}} {{item.issueTitle}}</a>
+                                <a target="_blank" v-bind:href="item.link">{{item.number}} {{item.issueTitle}}</a>
                             </li>
                         </ul>
                     </p>
