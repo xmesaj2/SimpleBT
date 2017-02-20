@@ -12,9 +12,10 @@ var bt = new Vue({
         category: 'Category',
         title: '',
         description: '',
+        current: '',
+        expected: '',
         steps: [],
         newStepText: '',
-        expected: '',
         revision: ''
     },
     //created: function () {
