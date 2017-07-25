@@ -15,11 +15,12 @@ Visit ***[Simple Bug Tracker](https://xmesaj2.github.io/SimpleBT/)*** to get sta
 ### Disadvantages:
  
 * Unofficial, could create different format of reports when it's changed by the target
+* Still requires some manual work
 
 
 ### Known issues:
 
-* Preview might be hard to read for reports with very long description due to linebreaks handling
+* Adding links results in raw, untitled links (to be manually adjusted eventually)
 
 -
 
